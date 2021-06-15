@@ -7,18 +7,28 @@ on:
     branches: [ master ]
   workflow_dispatch: # enable manual execution
 
+env:
+  BUILD_TYPE: Debug
+
 jobs:
   build:
     runs-on: ubuntu-20.04
 
     steps:
+
+    - name: Cancel previous runs
+      uses: styfle/cancel-workflow-action@0.9.0
+      with:
+        access_token: ${{ github.token }}
+
     - uses: actions/checkout@v2
 
-    - name: Setup
-      run: mkdir ${{github.workspace}}/build
+    - name: Configure CMake
+      # `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      run: cmake --build ${{github.workspace}}/build --config Debug --target all -j 14 --
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Test
       run: ./${{github.workspace}}/build/test/tests
