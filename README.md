@@ -1,5 +1,7 @@
 # cpp-dojo
 
+[![CI](https://github.com/horothesun/cpp-dojo/actions/workflows/ci-linux.yml/badge.svg)](https://github.com/horothesun/cpp-dojo/actions/workflows/ci-linux.yml)
+
 ## Build
 
 ```bash
