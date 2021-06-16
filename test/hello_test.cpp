@@ -1,8 +1,8 @@
 #include "catch.hpp"
-
-#include "hello.h"
 #include <iostream>
 #include <sstream>
+
+#include "hello.h"
 
 TEST_CASE("hello says hello")
 {
