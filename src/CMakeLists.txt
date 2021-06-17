@@ -1,7 +1,5 @@
-set(SOURCES
-  "hello.cpp"
-  "hello.h"
-)
+aux_source_directory(. SOURCES)
+list (REMOVE_ITEM SOURCES ./CMakeLists.txt ./main.cpp)
 
 set(LIB_NAME ${PROJECT_NAME}_lib)
 
