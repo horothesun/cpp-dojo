@@ -3208,7 +3208,7 @@ namespace Catch {
     StringRef trim(StringRef ref);
 
     // !!! Be aware, returns refs into original string - make sure original string outlives them
-    std::vector<StringRef> splitStringRef( StringRef str, char delimiter );
+    std::vector<StringRef> splitStringRef( StringRef str, char separator );
     bool replaceInPlace( std::string& str, std::string const& replaceThis, std::string const& withThis );
 
     struct pluralise {
@@ -8867,10 +8867,10 @@ namespace detail {
             if( it != itEnd ) {
                 auto const &next = *it;
                 if( isOptPrefix( next[0] ) ) {
-                    auto delimiterPos = next.find_first_of( " :=" );
-                    if( delimiterPos != std::string::npos ) {
-                        m_tokenBuffer.push_back( { TokenType::Option, next.substr( 0, delimiterPos ) } );
-                        m_tokenBuffer.push_back( { TokenType::Argument, next.substr( delimiterPos + 1 ) } );
+                    auto separatorPos = next.find_first_of( " :=" );
+                    if( separatorPos != std::string::npos ) {
+                        m_tokenBuffer.push_back( { TokenType::Option, next.substr( 0, separatorPos ) } );
+                        m_tokenBuffer.push_back( { TokenType::Argument, next.substr( separatorPos + 1 ) } );
                     } else {
                         if( next[1] != '-' && next.size() > 2 ) {
                             std::string opt = "- ";
@@ -13860,11 +13860,11 @@ namespace Catch {
         return replaced;
     }
 
-    std::vector<StringRef> splitStringRef( StringRef str, char delimiter ) {
+    std::vector<StringRef> splitStringRef( StringRef str, char separator ) {
         std::vector<StringRef> subStrings;
         std::size_t start = 0;
         for(std::size_t pos = 0; pos < str.size(); ++pos ) {
-            if( str[pos] == delimiter ) {
+            if( str[pos] == separator ) {
                 if( pos - start > 1 )
                     subStrings.push_back( str.substr( start, pos-start ) );
                 start = pos+1;
